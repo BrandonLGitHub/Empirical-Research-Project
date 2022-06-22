@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\tsclient\brandonlange\Desktop\School\Winter 2022\ECON 350 (Econometrics
+> )\Project\FinalPaperLog_LangeBrandon_McCulloughOtis.txt
+  log type:  text
+ opened on:  14 Mar 2022, 08:44:24
+
+. 
+. import delimited Dataset using "\\tsclient\brandonlange\Desktop\School\Winter 2022\E
+> CON 350 (Econometrics)\Project\Cleaned Up Data Set CSV.csv", encoding(UTF-8) 
+(19 vars, 5,406 obs)
+
+. 
+. encode date, gen(date_code) /*converting date string into a date code for stata to r
+> ead*/
+
+. xtset statefips date_code /*setting panel variable and time variable*/
+       panel variable:  statefips (strongly balanced)
+        time variable:  date_code, 1 to 106
+                delta:  1 unit
+
+. 
+. xtreg contclaims_count_regular pand_claims covid_cases covid_death_count full_vaccin
+> e, fe
+
+Fixed-effects (within) regression               Number of obs     =      5,406
+Group variable: statefips                       Number of groups  =         51
+
+R-sq:                                           Obs per group:
+     within  = 0.3389                                         min =        106
+     between = 0.4003                                         avg =      106.0
+     overall = 0.0795                                         max =        106
+
+                                                F(4,5351)         =     685.85
+corr(u_i, Xb)  = -0.2033                        Prob > F          =     0.0000
+
+-----------------------------------------------------------------------------------
+contclaims_coun~r |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+------------------+----------------------------------------------------------------
+      pand_claims |    .120943   .0083622    14.46   0.000     .1045498    .1373363
+      covid_cases |  -.2717389   .0817873    -3.32   0.001    -.4320755   -.1114024
+covid_death_count |   22.81001   9.112335     2.50   0.012     4.946124     40.6739
+     full_vaccine |  -.0054818   .0001464   -37.43   0.000    -.0057689   -.0051947
+            _cons |   163247.8    3485.65    46.83   0.000     156414.5    170081.1
+------------------+----------------------------------------------------------------
+          sigma_u |  219014.13
+          sigma_e |  165862.32
+              rho |  .63551641   (fraction of variance due to u_i)
+-----------------------------------------------------------------------------------
+F test that all u_i=0: F(50, 5351) = 55.45                   Prob > F = 0.0000
+
+. 
+. xtreg contclaims_count_regular binary_dumb covid_cases covid_death_count full_vaccin
+> e, fe
+
+Fixed-effects (within) regression               Number of obs     =      5,406
+Group variable: statefips                       Number of groups  =         51
+
+R-sq:                                           Obs per group:
+     within  = 0.3134                                         min =        106
+     between = 0.8976                                         avg =      106.0
+     overall = 0.0001                                         max =        106
+
+                                                F(4,5351)         =     610.54
+corr(u_i, Xb)  = -0.5006                        Prob > F          =     0.0000
+
+-----------------------------------------------------------------------------------
+contclaims_coun~r |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+------------------+----------------------------------------------------------------
+      binary_dumb |   8548.973   5689.922     1.50   0.133    -2605.593    19703.54
+      covid_cases |  -.3263327    .083443    -3.91   0.000    -.4899151   -.1627504
+covid_death_count |   27.17304   9.286712     2.93   0.003     8.967305    45.37878
+     full_vaccine |  -.0060853   .0001544   -39.41   0.000     -.006388   -.0057826
+            _cons |   182672.9   5597.836    32.63   0.000     171698.8    193646.9
+------------------+----------------------------------------------------------------
+          sigma_u |     261561
+          sigma_e |  169037.55
+              rho |  .70538895   (fraction of variance due to u_i)
+-----------------------------------------------------------------------------------
+F test that all u_i=0: F(50, 5351) = 135.84                  Prob > F = 0.0000
+
+. 
+. log close
+      name:  <unnamed>
+       log:  \\tsclient\brandonlange\Desktop\School\Winter 2022\ECON 350 (Econometrics
+> )\Project\FinalPaperLog_LangeBrandon_McCulloughOtis.txt
+  log type:  text
+ closed on:  14 Mar 2022, 08:44:28
+--------------------------------------------------------------------------------------
